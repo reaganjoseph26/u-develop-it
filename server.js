@@ -55,13 +55,24 @@ app.get('/api/candidate/:id', (req, res) => {
 
 //create a query for delete operation
 // Delete a candidate; ? mark denotes a placeholder making this a prepared statement
-// db.run(`DELETE FROM candidates WHERE id = ?`, 1, function(err, result) {
-//     if (err) {
-//       console.log(err);
-//     }
+app.delete("/api/candidate/:id", (req,res)=>{
+    const sql = `DELETE FROM candidates WHERE id = ?`;
+    const params = [req.params.id]
 
-//     console.log(result, this, this.changes);
-//   });
+    db.run(sql, params, function(err, result) {
+        if (err) {
+         res.status(404).json({error: res.message});
+         return;
+        }
+    
+        res.json({
+            message: 'successfully deleted',
+            changes: this.changes
+            //this.changes verifies if any rows were deleted
+        });
+      });
+})
+
 
 //create a query for create operation
 // Create a candidate

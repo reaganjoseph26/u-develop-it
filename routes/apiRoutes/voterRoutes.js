@@ -4,7 +4,7 @@ const db = require('../../db/database');
 const inputCheck = require('../../utils/inputCheck');
 
 router.get('/voters', (req, res) => {
-    const sql = `SELECT * FROM voters`;
+    const sql = `SELECT * FROM voters ORDER BY last_name`;
     const params = []
 
     db.all(sql, params, (err, rows) => {
